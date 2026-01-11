@@ -16,8 +16,24 @@
 #include QMK_KEYBOARD_H
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-  [0] = LAYOUT( /* Base */
-    KC_1
+  [0] = LAYOUT(
+    KC_LEFT, KC_DOWN, KC_RIGHT, KC_SPC, KC_UP, KC_MUTE
   ),
-
 };
+
+bool encoder_update_user(uint8_t index, bool clockwise) {
+    if (index == 0) { /* First encoder */
+        if (clockwise) {
+            tap_code(KC_PGUP);
+        } else {
+            tap_code(KC_PGDN);
+        }
+    } else if (index == 1) { /* Second encoder */
+        if (clockwise) {
+            tap_code(KC_VOLU);
+        } else {
+            tap_code(KC_VOLD);
+        }
+    }
+    return false;
+}
